@@ -1,0 +1,50 @@
+services:
+  db:
+    image: postgres:17
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - tiny_habit_network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - 5050:80
+    depends_on:
+      - db
+    networks:
+      - tiny_habit_network
+
+  web:
+    build: ./backend
+    container_name: django_backend
+    environment:
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_NAME=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/usr/src/app
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    networks:
+      - tiny_habit_network
+
+networks:
+  tiny_habit_network:
+    driver: bridge

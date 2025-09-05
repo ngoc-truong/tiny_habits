@@ -1,0 +1,34 @@
+# Python/Virtualenv
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDE/Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Git
+.git/
+.gitignore
+
+# Umgebungsdateien (wichtig: .env ignorieren!)
+.env
+.env.local
+
+# Build- und Log-Dateien
+*.log
+*.sqlite3
+.DS_Store
+
+# Docker-spezifisch
+docker-compose.override.yml
+
+# Node.js (falls nicht genutzt)
+node_modules/
+
+# pgdata (wird über Docker-Volume verwaltet)
+pgdata/
