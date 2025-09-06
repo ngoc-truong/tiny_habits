@@ -35,6 +35,7 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_PORT=${POSTGRES_PORT}
+      - SECRET_KEY=${SECRET_KEY}
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./backend:/usr/src/app
